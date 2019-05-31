@@ -11,6 +11,7 @@ Then `cd` and change `.env` file and `Dockerfile env`
 Once this is done, run
 
 ```bash
+yarn install
 yarn deploy
 ```
 
