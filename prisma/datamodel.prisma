@@ -1,0 +1,49 @@
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  email: String @unique
+  name: String
+  phone: String @unique
+  secret: String
+  role: UserRole! @default(value: NORMAL)
+  posts: [Post!]! @relation(link: TABLE)
+  company: Company @relation(name: "Owner")
+  dapps: [Company!]! @relation(name: "Users")
+}
+
+type Company {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  owner: User! @relation(link: INLINE, name: "Owner")
+  users: [User!]! @relation(link: TABLE, name: "Users")
+  name: String
+  type: String
+  phone: String @unique
+  email: String @unique
+  secret: String
+  checked: Boolean @default(value: false)
+}
+
+type Post {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  title: String!
+  published: Boolean! @default(value: false)
+  description: String
+  type: String
+  cover: String
+  content: String
+  raw: String
+  author: User
+  tag: [String!]! @scalarList(strategy: RELATION)
+}
+
+enum UserRole {
+  ADMIN
+  COMPANY
+  VIP
+  NORMAL
+}
