@@ -1,6 +1,6 @@
 import { objectType } from 'yoga'
 
-export const TripUpdateResponse = objectType({
+export const AuthPayload = objectType({
   name: 'AuthPayload',
   definition(t) {
     t.string('token')
