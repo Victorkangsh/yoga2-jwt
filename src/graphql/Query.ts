@@ -2,12 +2,6 @@ import { prismaObjectType, stringArg } from 'yoga'
 import { Context } from '../context'
 import { getUserId } from '../utils'
 
-/*
-type Query {
-  feed: [Post!]!
-  filterPosts(searchString: String!): [Post!]!
-}
-*/
 export const Query = prismaObjectType({
   name: 'Query',
   definition(t) {
