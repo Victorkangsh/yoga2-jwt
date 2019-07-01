@@ -1,3 +1,5 @@
+# Issue, change your vscode ts version to 3.4.5. Project will show 'too large interface' when ts version higher 3.5.0.
+
 ## Getting started
 
 Run the following command to clone the starter
