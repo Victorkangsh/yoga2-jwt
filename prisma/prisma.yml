@@ -14,5 +14,5 @@ hooks:
     - npx nexus-prisma-generate --output ./.yoga/nexus-prisma
 
 # Seeds initial data into the database by running a script.
-seed:
-  run: npx ts-node ./prisma/seed.ts
+# seed:
+#   run: npx ts-node ./prisma/seed.ts

@@ -17,7 +17,7 @@ export const Query = prismaObjectType({
         after: stringArg({ nullable: true }),
       },
       resolve: (parent, args, ctx: Context) => {
-        return ctx.prisma.posts({
+        return ctx.db.posts({
           where: { published: true },
           orderBy: 'createdAt_DESC',
           first: 10,
@@ -33,7 +33,7 @@ export const Query = prismaObjectType({
         after: stringArg({ nullable: true }),
       },
       resolve: (parent, { searchString, after }, ctx) => {
-        return ctx.prisma.posts({
+        return ctx.db.posts({
           where: {
             OR: [
               { title_contains: searchString },
@@ -51,7 +51,7 @@ export const Query = prismaObjectType({
       type: 'User',
       resolve: (_, args, ctx: Context) => {
         const userId = getUserId(ctx)
-        return ctx.prisma.user({ id: userId })
+        return ctx.db.user({ id: userId })
       },
     })
 
@@ -61,7 +61,7 @@ export const Query = prismaObjectType({
         postId: stringArg(),
       },
       resolve: (_, args, ctx: Context) => {
-        return ctx.prisma.post({ id: args.postId })
+        return ctx.db.post({ id: args.postId })
       },
     })
   },

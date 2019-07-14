@@ -22,7 +22,7 @@ export const Mutation = prismaObjectType({
       },
       resolve: async (parent, args, ctx: Context) => {
         const secret = await bcrypt.hash(args.secret, 10)
-        const user = await ctx.prisma.createUser({
+        const user = await ctx.db.createUser({
           phone: args.phone,
           name: args.name,
           secret,
@@ -45,7 +45,7 @@ export const Mutation = prismaObjectType({
         secret: stringArg(),
       },
       resolve: async (parent, { phone, secret }, ctx: Context) => {
-        const user = await ctx.prisma.user({ phone })
+        const user = await ctx.db.user({ phone })
         const valid = await bcrypt.compare(secret, user ? user.secret : '')
 
         if (!valid || !user) {
@@ -70,11 +70,11 @@ export const Mutation = prismaObjectType({
       },
       resolve: async (parent, args, ctx: Context) => {
         const userId = getUserId(ctx)
-        const author = await ctx.prisma.post({ id: args.id }).author()
+        const author = await ctx.db.post({ id: args.id }).author()
         if (author.id !== userId) {
           throw new Error('错误')
         }
-        return ctx.prisma.deletePost({ id: args.id })
+        return ctx.db.deletePost({ id: args.id })
       },
     })
 
@@ -91,7 +91,7 @@ export const Mutation = prismaObjectType({
       resolve: (parent, args, ctx: Context) => {
         const userId = getUserId(ctx)
 
-        return ctx.prisma.createPost({
+        return ctx.db.createPost({
           ...args,
           author: { connect: { id: userId } },
         })
@@ -104,7 +104,7 @@ export const Mutation = prismaObjectType({
         id: idArg(),
       },
       resolve: (parent, { id }, ctx: Context) => {
-        return ctx.prisma.updatePost({
+        return ctx.db.updatePost({
           where: { id },
           data: { published: true },
         })
